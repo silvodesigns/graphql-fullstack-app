@@ -1,4 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga');
+const { v4: uuidv4 } = require('uuid');
 
 //Returning array of objects from the query result
 const users = [
@@ -54,6 +55,10 @@ const typeDefs = `
       age: Int!,
       location: Location
   }
+
+  type Mutation {
+      addUser(name: String!, age:Int!): [Users!]!
+  }
 `;
 
 // Then we added resolvers which provide the implementation for those queries
@@ -78,6 +83,19 @@ const resolvers = {
             };
         },
         users() {
+            return users;
+        }
+    },
+    Mutation: {
+        addUser(parent, args, ctx, info) {
+            const { name, age } = args;
+
+            users.push({
+                id: uuidv4(),
+                name,
+                age
+            });
+
             return users;
         }
     }
