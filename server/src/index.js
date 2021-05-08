@@ -59,6 +59,7 @@ const typeDefs = `
   type Mutation {
       addUser(name: String!, age:Int!): [User!]!
       updateUser(id: ID!, name: String, age: Int): User!
+      deleteUser(id: ID!): User!
   }
 `;
 
@@ -117,6 +118,17 @@ const resolvers = {
             }
 
             return user;
+        },
+
+        deleteUser(parent, args, ctx, info) {
+            const index = users.findIndex((user) => user.id === args.id);
+            if (index === -1) {
+                throw new Error(`User with id ${args.id} does not exist`);
+            }
+
+            const deletedUser = users.splice(index, 1);
+            return deletedUser[0];
+
         }
     }
 };
