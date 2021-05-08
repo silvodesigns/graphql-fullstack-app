@@ -41,7 +41,7 @@ const typeDefs = `
     isSingle: Boolean
     numbers: [Int!]!
     location: Location
-    users: [Users!]!
+    users: [User!]!
   }
 
   type Location {
@@ -49,15 +49,16 @@ const typeDefs = `
     city: String!
   }
 
-  type Users {
-      id: ID!
+  type User {
+      id: ID!,
       name: String!,
       age: Int!,
       location: Location
   }
 
   type Mutation {
-      addUser(name: String!, age:Int!): [Users!]!
+      addUser(name: String!, age:Int!): [User!]!
+      updateUser(id: ID!, name: String, age: Int): User!
   }
 `;
 
@@ -97,6 +98,25 @@ const resolvers = {
             });
 
             return users;
+        },
+        updateUser(parent, args, ctx, info) {
+            const { id, name, age } = args;
+            const user = users.find((user) => user.id === id);
+
+            if (!user) {
+                throw new Error(`user with id ${id} does not exist`);
+
+            }
+
+            if (name) {
+                user.name = name;
+            }
+
+            if (age) {
+                user.age = age;
+            }
+
+            return user;
         }
     }
 };
