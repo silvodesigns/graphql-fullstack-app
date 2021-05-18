@@ -9,7 +9,7 @@ import {
     ADD_REVIEW_QUERY,
     DELETE_REVIEW_QUERY
 } from '../utils/queries';
-import { getClient } from '../utils/common';
+import { getClient } from '../utils/client';
 import { getError, clearError } from './error';
 export const addReview = (skuId, review) => {
     return {

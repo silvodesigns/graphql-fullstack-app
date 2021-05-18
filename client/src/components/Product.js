@@ -1,7 +1,20 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import ProductModal from './ProductModal';
+
 const Product = (props) => {
-    const { name, skuId, description, price, handleActionBtnClick } = props;
+    const {
+        name,
+        skuId,
+        description,
+        price,
+        handleActionBtnClick,
+        handleProductModalClose,
+        isOpen,
+        selectedProduct,
+        reviews
+    } = props;
+
     return (
         <React.Fragment>
             <div className="product-item">
@@ -43,6 +56,12 @@ const Product = (props) => {
                     </div>
                 </div>
             </div>
+            <ProductModal
+                isOpen={isOpen}
+                handleProductModalClose={handleProductModalClose}
+                {...selectedProduct}
+                reviews={reviews}
+            />
         </React.Fragment>
     );
 };
