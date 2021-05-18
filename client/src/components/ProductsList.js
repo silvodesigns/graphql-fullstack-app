@@ -12,7 +12,9 @@ class ProductsList extends React.Component {
         products: [],
         errorMsg: '',
         isLoading: false,
-        selectedProduct: null
+        selectedProduct: null,
+        reviews: null,
+        isOpen: false
     };
     componentDidMount() {
         this.setState({ isLoading: true });
